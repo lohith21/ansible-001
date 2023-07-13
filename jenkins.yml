@@ -1,4 +1,3 @@
----
 - hosts: localserver
   roles:
     - jdk
