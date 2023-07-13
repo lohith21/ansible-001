@@ -1,0 +1,15 @@
+all:
+  children:
+    webservergroup:
+      children:
+        webservers:
+          hosts:
+            172.31.21.135:
+        webservers2:
+          hosts:
+            172.31.17.147:
+    localserver:
+      hosts:
+        localhost:
+      vars:
+        ansible_connection: local

@@ -1,0 +1,25 @@
+---
+- name: install apache2 package
+  apt:
+    name: "{{ packagename }}"
+    state: latest
+  notify: restart apache2 server
+- name: copy ports.conf file to etc/apache
+  template:
+    src: ports.conf.j2
+    dest: /etc/apache2/ports.conf
+  notify: restart apache2 server
+- name: create a dir tutorial
+  file:
+    path: /var/www/tutorial
+    state: directory
+- name: copy index file to tutorial dir
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html
+  notify: restart apache2 server
+- name: start apache server
+  service:
+    name: "{{ packagename }}"
+    state: started
+    enabled: yes

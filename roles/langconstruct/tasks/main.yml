@@ -1,0 +1,9 @@
+---
+- name: create users
+  user:
+    name: "{{item}}"
+    groups: test
+    state: present
+  with_items:
+    - user1
+    - user2

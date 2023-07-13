@@ -1,0 +1,29 @@
+---
+- name: Run apt update to update the pakcage
+  ansible.builtin.apt:
+    update_cache: yes
+- name: install apache2 package
+  apt:
+    name: openjdk-11-jdk
+    state: latest
+- name: add the user tomcat -m -U -d /opt/tomcat -s /bin/false
+  ansible.builtin.user:
+    name: tomcat
+    createhome: yes
+    home: /opt/tomcat
+    shell: /bin/false
+- name: Download file from tomcat site
+  ansible.builtin.get_url:
+    url: https://downloads.apache.org/tomcat/tomcat-10/v10.1.10/bin/apache-tomcat-10.1.10.tar.gz
+    dest: /tmp/apache-tomcat-10.1.10.tar.gz
+    mode: '0777'
+- name: Extract tomcat tar to /opt/tomcat
+  ansible.builtin.unarchive:
+    src: /tmp/apache-tomcat-10.1.10.tar.gz
+    dest: /opt/tomcat
+    remote_src: yes
+- name: Creating a soft link
+  ansible.builtin.file:
+    src: /opt/tomcat/apache-tomcat-10.1.10
+    dest: /opt/tomcat/latest
+    state: link
