@@ -1,0 +1,10 @@
+---
+- name: install docker
+  apt:
+    name: "{{ packagename }}"
+    state: latest
+    update_cache: yes
+
+- name: Run docker ps command
+  ansible.builtin.command:
+    cmd: docker ps -a
